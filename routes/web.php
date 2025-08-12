@@ -12,3 +12,8 @@ Route::get('/store', function () {
     return view('store');
 })->name('my-store');
 
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return view('adm-starter');
+    })->name('admin.home');
+});

@@ -7,7 +7,7 @@
     <meta name="author" content="Robby Tan">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Flask Home Page</title>
+    <title>Laravel Home Page</title>
 </head>
 
 <body>
@@ -34,7 +34,7 @@
         </nav>
 
         <!-- Main Content -->
-        <h1 class="mt-4">Welcome to Flask Programming</h1>
+        <h1 class="mt-4">Welcome to Laravel Programming</h1>
         <p>This is a simple web page created using HTML and Bootstrap.</p>
     </div>
 
