@@ -23,12 +23,12 @@ Route::prefix('admin')->group(function () {
     Route::delete('/{student}', [StudentController::class, 'destroy'])->name('adm-student.destroy');
   });
   Route::prefix('period')->group(function () {
+    Route::get('/', [PeriodController::class, 'index'])->name('adm-period.index');
+    Route::get('/add', [PeriodController::class, 'create'])->name('adm-period.create');
+    Route::post('/add', [PeriodController::class, 'store'])->name('adm-period.store');
     Route::get('/{period}/edit', [PeriodController::class, 'edit'])->name('adm-period.edit');
     Route::put('/{period}/edit', [PeriodController::class, 'update'])->name('adm-period.update');
     Route::delete('/{period}', [PeriodController::class, 'destroy'])->name('adm-period.destroy');
-    Route::get('/add', [PeriodController::class, 'create'])->name('adm-period.create');
-    Route::post('/add', [PeriodController::class, 'store'])->name('adm-period.store');
-    Route::get('/', [PeriodController::class, 'index'])->name('adm-period.index');
   });
   Route::prefix('student_class')->group(function () {
     Route::get('/filter', [StudentClassController::class, 'filter'])->name('adm-sclass.filter');
