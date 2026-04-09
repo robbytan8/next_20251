@@ -24,7 +24,6 @@
 
       <!-- [ Main Content ] start -->
       <div class="row">
-        <!-- [ page ] start -->
         <div class="col-sm-12">
           <div class="card">
             <div class="card-body">
@@ -32,17 +31,16 @@
                 @csrf
                 <div class="form-group mb-3">
                   <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="name" name="name" maxlength="100" required placeholder="e.g., 2025-2026" value="{{ old('name') }}">
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" maxlength="100" required placeholder="e.g., 2025-2026" value="{{ old('name') }}">
+                  @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
-                @error('name')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
             </div>
           </div>
         </div>
-        <!-- [ page ] end -->
       </div>
       <!-- [ Main Content ] end -->
     </div>
@@ -50,9 +48,7 @@
 @endsection
 
 @section('CSS')
-
 @endsection
 
 @section('JS')
-
 @endsection

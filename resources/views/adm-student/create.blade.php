@@ -24,7 +24,6 @@
 
       <!-- [ Main Content ] start -->
       <div class="row">
-        <!-- [ page ] start -->
         <div class="col-sm-12">
           <div class="card">
             <div class="card-body">
@@ -32,45 +31,44 @@
                 @csrf
                 <div class="form-group mb-3">
                   <label for="id" class="form-label">ID</label>
-                  <input type="text" class="form-control" id="id" name="id" maxlength="10" required autofocus placeholder="e.g., 123456789" value="{{ old('id') }}">
+                  <input type="text" class="form-control @error('id') is-invalid @enderror" id="id" name="id" maxlength="10" required autofocus placeholder="e.g., 123456789" value="{{ old('id') }}">
+                  @error('id')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
-                @error('id')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
                 <div class="form-group mb-3">
                   <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="name" name="name" maxlength="100" required placeholder="e.g., John Doe" value="{{ old('name') }}">
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" maxlength="100" required placeholder="e.g., John Doe" value="{{ old('name') }}">
+                  @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
-                @error('name')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
                 <div class="form-group mb-3">
                   <label for="address" class="form-label">Address</label>
-                  <textarea type="text" class="form-control" id="address" name="address" maxlength="300" required rows="2" placeholder="e.g. Surya Sumantri St. 65">{{ old("address") }}</textarea>
+                  <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" maxlength="300" required rows="2" placeholder="e.g. Surya Sumantri St. 65">{{ old("address") }}</textarea>
+                  @error('address')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
-                @error('address')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
                 <div class="form-group mb-3">
                   <label for="birth_date" class="form-label">Birth Date</label>
-                  <input type="date" class="form-control" id="birth_date" name="birth_date" required value="{{ old('birth_date') }}">
+                  <input type="date" class="form-control @error('birth_date') is-invalid @enderror" id="birth_date" name="birth_date" required value="{{ old('birth_date') }}">
+                  @error('birth_date')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
-                @error('birth_date')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
                 <div class="form-group mb-3">
                   <label for="photo" class="form-label">Profile Photo</label>
-                  <input type="file" class="form-control" id="photo" name="photo" accept="image/png, image/jpeg, image/jpg">
+                  <input type="file" class="form-control @error('photo') is-invalid @enderror" id="photo" name="photo" accept="image/png, image/jpeg, image/jpg">
+                  @error('photo')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
-                @error('photo')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
             </div>
           </div>
         </div>
-        <!-- [ page ] end -->
       </div>
       <!-- [ Main Content ] end -->
     </div>

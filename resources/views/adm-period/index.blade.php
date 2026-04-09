@@ -46,7 +46,7 @@
                       <td>{{ $period->id }}</td>
                       <td>{{ $period->name }}</td>
                       <td>
-                        <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="#" class="btn btn-sm btn-warning">Edit</a>
                         <form action="#" method="POST" style="display:inline;">
                           @csrf
                           @method('DELETE')
