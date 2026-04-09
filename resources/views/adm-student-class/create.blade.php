@@ -35,70 +35,50 @@
             <div class="card-body">
               <form method="post" action="{{ route('adm-sclass.store') }}">
                 @csrf
-                <div class="form-group mb-3">
-                  <label for="period_id" class="form-label">ID</label>
-                  <select class="form-select" id="period_id" name="period_id" required>
+                <div class="form-group mb-4">
+                  <label for="period_id" class="form-label fw-bold">Period ID</label>
+                  <select class="form-select select2-init" id="period_id" name="period_id" required>
                     <option value="" disabled selected>-- Select Period --</option>
-                    @foreach($periods as $period)
-                      <option value="{{ $period->id }}" {{ old('period_id') == $period->id ? 'selected' : '' }}>
-                        {{ $period->name }}
-                      </option>
+                    @foreach ($periods as $period)
+                      <option value="{{ $period->id }}">{{ $period->name }}</option>
                     @endforeach
                   </select>
-                  @error('period_id')
-                  <div class="text-danger">{{ $message }}</div>
-                  @enderror
                 </div>
-                <table class="table" id="placements-table">
-                  <thead>
-                  <tr>
-                    <th>Student</th>
-                    <th>Class</th>
-                  </tr>
+
+                <table class="table align-middle" id="placements-table">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="width: 60%;">Student</th>
+                      <th>Class</th>
+                      <th style="width: 50px;"></th>
+                    </tr>
                   </thead>
-                  <tbody>
-                  <tr>
-                    <td>
-                      <select name="placements[0][student_id]" class="form-select" required>
-                        <option value="" disabled selected>-- Select Student 1 --</option>
-                        @foreach($students as $student)
-                          <option value="{{ $student->id }}">{{ $student->id }}  -  {{ $student->name }}</option>
-                        @endforeach
-                      </select>
-                    </td>
-                    <td>
-                      <input type="text" name="placements[0][class]" class="form-control" required placeholder="Enter Class">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <select name="placements[1][student_id]" class="form-select">
-                        <option value="" selected>-- Select Student 2 --</option>
-                        @foreach($students as $student)
-                          <option value="{{ $student->id }}">{{ $student->id }}  -  {{ $student->name }}</option>
-                        @endforeach
-                      </select>
-                    </td>
-                    <td>
-                      <input type="text" name="placements[1][class]" class="form-control" placeholder="Enter Class">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <select name="placements[2][student_id]" class="form-select">
-                        <option value="" selected>-- Select Student 3 --</option>
-                        @foreach($students as $student)
-                          <option value="{{ $student->id }}">{{ $student->id }} - {{ $student->name }}</option>
-                        @endforeach
-                      </select>
-                    </td>
-                    <td>
-                      <input type="text" name="placements[2][class]" class="form-control" placeholder="Enter Class">
-                    </td>
-                  </tr>
+                  <tbody id="table-body">
+                    <tr>
+                      <td>
+                        <select name="placements[0][student_id]" class="form-select select2-init" required>
+                          <option value="" disabled selected>-- Select Student --</option>
+                          @foreach ($students as $student)
+                            <option value="{{ $student->id }}">{{ $student->id }} - {{ $student->name }}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                      <td>
+                        <input type="text" name="placements[0][class]" class="form-control" required
+                          placeholder="Ex: 10-A">
+                      </td>
+                      <td></td>
+                    </tr>
                   </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary">Submit</button>
+
+                <button type="button" class="btn btn-outline-primary btn-sm mb-3" id="add-row">
+                  <i class="bi bi-plus"></i> + Add Row
+                </button>
+
+                <div class="border-top pt-3">
+                  <button type="submit" class="btn btn-primary px-4">Save All Data</button>
+                </div>
               </form>
             </div>
           </div>
@@ -111,9 +91,58 @@
 @endsection
 
 @section('CSS')
-
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet">
 @endsection
 
 @section('JS')
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      function initSelect2(element) {
+        $(element).select2({
+          theme: 'bootstrap-5',
+          width: '100%',
+          placeholder: $(element).data('placeholder'),
+        });
+      }
 
+      $('.select2-init').each(function() {
+        initSelect2(this);
+      });
+
+      let rowIndex = 1;
+
+      $('#add-row').click(function() {
+        let newRow = `
+            <tr>
+                <td>
+                    <select name="placements[${rowIndex}][student_id]" class="form-select select2-dynamic" required>
+                        <option value="" disabled selected>-- Select Student --</option>
+                        @foreach ($students as $student)
+                            <option value="{{ $student->id }}">{{ $student->id }} - {{ $student->name }}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td>
+                    <input type="text" name="placements[${rowIndex}][class]" class="form-control" required placeholder="Ex: 10-A">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm remove-row">×</button>
+                </td>
+            </tr>`;
+
+        $('#table-body').append(newRow);
+
+        initSelect2($(`select[name="placements[${rowIndex}][student_id]"]`));
+
+        rowIndex++;
+      });
+
+      $(document).on('click', '.remove-row', function() {
+        $(this).closest('tr').remove();
+      });
+    });
+  </script>
 @endsection
