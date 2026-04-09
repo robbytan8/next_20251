@@ -19,4 +19,9 @@ class Student extends Model
   protected $keyType = 'string';
 
   public $incrementing = false;
+
+  public function studentClasses()
+  {
+    return $this->hasMany(StudentClass::class);
+  }
 }

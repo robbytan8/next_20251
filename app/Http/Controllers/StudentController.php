@@ -34,7 +34,7 @@ class StudentController extends Controller
       'name' => 'required|string|max:100',
       'address' => 'required|string|max:300',
       'birth_date' => 'required|date',
-      'photo' => 'nullable|mimes:jpg,png,jpeg|max:2048',
+      'photo' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
     ]);
     $student = new Student($validatedData);
     $student->save();
@@ -46,7 +46,7 @@ class StudentController extends Controller
    */
   public function show(Student $student)
   {
-    //
+    return view('adm-student.show', compact('student'));
   }
 
   /**
@@ -54,7 +54,7 @@ class StudentController extends Controller
    */
   public function edit(Student $student)
   {
-    //
+    return view('adm-student.edit', compact('student'));
   }
 
   /**
@@ -62,7 +62,19 @@ class StudentController extends Controller
    */
   public function update(Request $request, Student $student)
   {
-    //
+    $validatedData = $request->validate([
+      'name' => 'required|string|max:100',
+      'address' => 'required|string|max:300',
+      'birth_date' => 'required|date',
+      'photo' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+    ]);
+    if ($request->hasFile('photo')) {
+      $validatedData['photo'] = $request->file('photo')->store('photos', 'public');
+    } else {
+      $validatedData['photo'] = $student->photo;
+    }
+    $student->update($validatedData);
+    return redirect()->route('adm-student.index')->with('success', 'Student updated successfully.');
   }
 
   /**
@@ -70,6 +82,7 @@ class StudentController extends Controller
    */
   public function destroy(Student $student)
   {
-    //
+    $student->delete();
+    return redirect()->route('adm-student.index')->with('success', 'Student deleted successfully.');
   }
 }

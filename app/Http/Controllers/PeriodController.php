@@ -50,7 +50,7 @@ class PeriodController extends Controller
      */
     public function edit(Period $period)
     {
-        //
+        return view('adm-period.edit', compact('period'));
     }
 
     /**
@@ -58,7 +58,11 @@ class PeriodController extends Controller
      */
     public function update(Request $request, Period $period)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:100|unique:period,name,' . $period->id,
+        ]);
+        $period->update($validatedData);
+        return redirect()->route('adm-period.index')->with('success', 'Period updated successfully.');
     }
 
     /**
@@ -66,6 +70,7 @@ class PeriodController extends Controller
      */
     public function destroy(Period $period)
     {
-        //
+        $period->delete();
+        return redirect()->route('adm-period.index')->with('success', 'Period deleted successfully.');
     }
 }

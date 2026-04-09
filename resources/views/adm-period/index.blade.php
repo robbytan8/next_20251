@@ -46,8 +46,8 @@
                       <td>{{ $period->id }}</td>
                       <td>{{ $period->name }}</td>
                       <td>
-                        <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="#" method="POST" style="display:inline;">
+                        <a href="{{ route('adm-period.edit', $period->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('adm-period.destroy', $period->id) }}" method="POST" style="display:inline;">
                           @csrf
                           @method('DELETE')
                           <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">

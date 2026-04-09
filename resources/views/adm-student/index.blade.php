@@ -23,7 +23,6 @@
 
       <!-- [ Main Content ] start -->
       <div class="row">
-        <!-- [ page ] start -->
         <div class="col-sm-12">
           <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -50,8 +49,9 @@
                       <td>{{ $student->address }}</td>
                       <td>{{ \Carbon\Carbon::parse($student->birth_date)->format("d M Y") }}</td>
                       <td>
-                        <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="#" method="POST" style="display:inline;">
+                        <a href="{{ route('adm-student.show', $student->id) }}" class="btn btn-sm btn-info">View</a>
+                        <a href="{{ route('adm-student.edit', $student->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('adm-student.destroy', $student->id) }}" method="POST" style="display:inline;">
                           @csrf
                           @method('DELETE')
                           <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
@@ -67,7 +67,6 @@
             </div>
           </div>
         </div>
-        <!-- [ page ] end -->
       </div>
       <!-- [ Main Content ] end -->
     </div>

@@ -1,0 +1,55 @@
+@extends('layouts.admin.master')
+
+@section('content')
+  <div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h5 class="m-b-10">Period Form</h5>
+              </div>
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item">Period Management</li>
+                <li class="breadcrumb-item" aria-current="page">Update Period Form</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <form method="post" action="{{ route('adm-period.update', $period->id) }}">
+                @csrf
+                @method('PUT')
+                <div class="form-group mb-3">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" maxlength="100" required placeholder="e.g., 2025-2026" value="{{ old('name', $period->name) }}">
+                  @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                </div>
+                <button type="submit" class="btn btn-primary">Update Period</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+@endsection
+
+@section('CSS')
+@endsection
+
+@section('JS')
+@endsection
