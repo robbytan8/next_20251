@@ -39,8 +39,8 @@ class StudentClassController extends Controller
    */
   public function create()
   {
-    $periods = Period::all("id", "name");
-    $students = Student::all("id", "name");
+    $periods = Period::select("id", "name")->get();
+    $students = Student::select("id", "name")->get();
     return view('adm-student-class.create', compact('periods', 'students'));
   }
 
@@ -112,8 +112,17 @@ class StudentClassController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(StudentClass $studentClass)
+  public function destroy(string $studentId, string $periodId, string $class)
   {
-    //
+    $deletedData = StudentClass::where('student_id', $studentId)
+      ->where('period_id', $periodId)
+      ->where('class', $class)
+      ->delete();
+
+    if ($deletedData) {
+      return redirect()->route('adm-sclass.index')->with('success', 'Student placement deleted successfully.');
+    } else {
+      return redirect()->route('adm-sclass.index')->withErrors(['err_msg' => 'Student placement not found.']);
+    }
   }
 }

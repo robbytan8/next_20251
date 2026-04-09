@@ -64,8 +64,10 @@
                         </select>
                       </td>
                       <td>
-                        <input type="text" name="placements[0][class]" class="form-control" required
-                          placeholder="Ex: 10-A">
+                        <input type="text" name="placements[0][class]" class="form-control @error('placements.0.class') is-invalid @enderror" required placeholder="Ex: 10-A" value="{{ old('placements.0.class') }}">
+                        @error('placements.0.class')
+                          <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                       </td>
                       <td></td>
                     </tr>
@@ -126,7 +128,7 @@
                     </select>
                 </td>
                 <td>
-                    <input type="text" name="placements[${rowIndex}][class]" class="form-control" required placeholder="Ex: 10-A">
+                    <input type="text" name="placements[${rowIndex}][class]" class="form-control @error('placements[${rowIndex}][class]') is-invalid @enderror" required placeholder="Ex: 10-A">
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger btn-sm remove-row">×</button>
