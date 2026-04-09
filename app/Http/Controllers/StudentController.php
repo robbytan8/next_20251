@@ -12,7 +12,7 @@ class StudentController extends Controller
    */
   public function index()
   {
-    $students = Student::all("id", "name", "address", "birth_date", "photo");
+    $students = Student::select("id", "name", "address", "birth_date", "photo")->get();
     return view('adm-student.index', compact('students'));
   }
 

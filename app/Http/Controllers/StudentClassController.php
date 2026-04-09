@@ -14,13 +14,13 @@ class StudentClassController extends Controller
    */
   public function index($periodId = -1)
   {
-    $periods = Period::all("id", "name");
+    $periods = Period::select("id", "name")->get();
     if ($periodId == null || $periodId == -1) {
       $studentClasses = collect();
     } else if ($periodId == 0) {
-      $studentClasses = StudentClass::with('student', 'period')->get();
+      $studentClasses = StudentClass::with(['student', 'period'])->get();
     } else {
-      $studentClasses = StudentClass::with('student', 'period')->where('period_id', $periodId)->get();
+      $studentClasses = StudentClass::with(['student', 'period'])->where('period_id', $periodId)->get();
     }
     return view('adm-student-class.index', compact('periods', 'studentClasses', 'periodId'));
   }

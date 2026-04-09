@@ -21,10 +21,10 @@ class StudentClass extends Model
   public $incrementing = false;
 
   public function period() {
-    return $this->belongsTo(Period::class, 'period_id', 'id');
+    return $this->belongsTo(Period::class);
   }
 
   public function student() {
-    return $this->belongsTo(Student::class, 'student_id', 'id');
+    return $this->belongsTo(Student::class);
   }
 }

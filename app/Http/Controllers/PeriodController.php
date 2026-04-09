@@ -12,7 +12,7 @@ class PeriodController extends Controller
      */
     public function index()
     {
-        $periods = Period::all("id", "name");
+        $periods = Period::select("id", "name")->get();
         return view('adm-period.index', compact('periods'));
     }
 
